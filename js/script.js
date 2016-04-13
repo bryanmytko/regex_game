@@ -42,6 +42,11 @@ $(document).ready(function(){
       words: ["333-5554-2993", "516-555-3722", "440-22d-9393", "7999-3333", "8-9-9"],
       win_condition: ["516-555-3722"],
       hint: "Remember the curly brackets {} allow you to specify a specific number of matched characters."
+    },
+    { rules: "Passwords to TheDreadFort.com must be secure! Match all passwords that include at least 1 non alphanumeric character.",
+      words: ["password123", "pa55w0rD!", "r00sebolt0n9^", "r4msaySn0w"],
+      win_condition: ["pa55w0rD!", "r00sebolt0n9^"],
+      hint: "This one is tricky! Do your best."
     }
   ];
 
