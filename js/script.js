@@ -7,21 +7,28 @@ $(document).ready(function(){
   var list = $('ul#regex-list');
   var title = $('h2.title');
   var list_item = '<li class="list-group-item"></li>';
-  var inbetween_text = $('p.inbetween-text');
+  var inbetween_text = $('.inbetween-text');
+  var win_string = '<p class="win">Congrats! You are a RegEx Champion!</p>';
+  var song = new Audio('audio/got.mp3');
 
   var rounds = [
-    { rules: "Match only the lines starting with letters!",
-      words: ["Test word", "Foo", "Lorem Ipsum", "999 82838 eee 88"],
-      win_condition: ["Test word", "Foo", "Lorem Ipsum"]
+    // { rules: "Testing", words: ["1", "2"], win_condition: ["1"] }
+    { rules: "Match only the Stark children.",
+      words: ["Bran Stark", "Rickon Stark", "Jon Snow", "Arya Stark", "Sansa Stark", "Robb Stark", "Theon Greyjoy"],
+      win_condition: ["Bran Stark", "Rickon Stark", "Arya Stark", "Sansa Stark", "Robb Stark"]
     },
-    { rules: "Match telephone numbers that only contain numbers (dashes and spaces allowed).",
-      words: ["123 123 1234", "938-3323", "444-Websitez", "555-555-5555", "1-800-CSS-TRIX", "General Assembly", "-------"],
-      win_condition: ["123 123 1234", "938-3323", "555-555-5555"]
-    },
-    { rules: "Match only the first phone number.",
-      words: ["333-555-2993", "234 233 2222", "999-3333", "8-9-9"],
-      win_condition: ["333-555-2993"]
+    { rules: "Daenerys is in trouble. Match the valid phone number so Tyrion can call and warn her!",
+      words: ["333-5554-2993", "516-555-3722", "440-22d-9393", "7999-3333", "8-9-9"],
+      win_condition: ["516-555-3722"]
     }
+  ];
+
+  var completed_text = [
+    "Nice Job!",
+    "Great! Keep it up!",
+    "You know nothing Jon Snow...",
+    "Correct! Nice!",
+    "Very good! Let's try another"
   ];
 
   regex_input.keyup(function(e){
@@ -30,7 +37,7 @@ $(document).ready(function(){
     check_win_condition();
   });
 
-  form.on("click", "a", function(){
+  form.on("click", ".inbetween-text", function(){
     populate_next_round();
   });
 
@@ -82,7 +89,8 @@ $(document).ready(function(){
   }
 
   function random_inbetween_text(){
-    return "Nice Job. <a class=\"continue\">Keep going?</a>";
+    var link = " Click to continue! &#9658;";
+    return completed_text[Math.floor(Math.random()*completed_text.length)] + link;
   }
 
   function complete_round(){
@@ -95,11 +103,17 @@ $(document).ready(function(){
       regex_input.remove();
       inbetween_text
         .show()
-        .html("Congrats! You are a RegEx Wizard!");
+        .addClass("winner")
+        .html("")
+        .prepend(win_string);
+
+      form.unbind();
+      song.play();
     }
   }
 
   function populate_next_round(){
+    current_matches = [];
     inbetween_text.hide()
     regex_input.show();
     current_round += 1;
