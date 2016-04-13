@@ -1,15 +1,44 @@
+@font-face {
+  font-family: got;
+  src: url(../fonts/got.ttf);
+}
+
 body {
-  background: #5C495F;
+  background: url(../img/westeros.jpg) 0 0 #000 no-repeat;
+  background-size: cover;
+}
+
+h1 {
+  margin: 0;
+  padding: 20px 0;
+  font-family: got, sans-serif;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 2.6px;
+  text-shadow: 1px 1px 2px black;
+}
+
+header {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.rules {
+  background: #232323;
+  text-align: center;
+  padding: 12px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
 }
 
 .main-container {
   width: 480px;
-  margin: 0 auto;
-  padding: 40px 0;
+  margin: 34px auto;
+  background: #3F4950;
+  padding: 34px;
 }
 
 form {
-  margin: 80px 0 0 0;
+  margin: 40px 0 0 0;
 }
 
 form input {
@@ -26,16 +55,37 @@ ul#regex-list {
 }
 
 ul#regex-list .matched {
-  color: yellow;
+  color: #DFE876;
 }
 
 h2.title {
-  font-size: 22px;
+  font-size: 18px;
   color: #fff;
-  padding: 22px 0;
+  padding: 0 0 22px 0;
+  margin-top: 0;
 }
 
 .inbetween-text {
-  font-size: 22px;
-  color: #FFDBF4;
+  font-size: 16px;
+  color: #fff;
+  display: none;
+  cursor: pointer;
+}
+
+.inbetween-text a {
+  text-decoration: none;
+}
+
+p.win {
+  font-family: got, sans-serif;
+  letter-spacing: 3px;
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.winner {
+  height: 336px;
+  background: url(../img/tyrion.png);
+  padding: 0;
 }
