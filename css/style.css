@@ -89,3 +89,13 @@ p.win {
   background: url(../img/tyrion.png);
   padding: 0;
 }
+
+.hint {
+  font-style: italic;
+  margin: 20px 0 0 0;
+  font-size: .9em;
+}
+
+.hint:before {
+  content: "Hint: ";
+}
