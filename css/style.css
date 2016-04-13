@@ -16,6 +16,10 @@ form input {
   font-size: 44px;
 }
 
+form p a {
+  cursor: pointer;
+}
+
 ul#regex-list {
   margin: 0;
   padding: 0;
@@ -29,4 +33,9 @@ h2.title {
   font-size: 22px;
   color: #fff;
   padding: 22px 0;
+}
+
+.inbetween-text {
+  font-size: 22px;
+  color: #FFDBF4;
 }
