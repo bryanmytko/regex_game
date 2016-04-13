@@ -1,0 +1,32 @@
+body {
+  background: #5C495F;
+}
+
+.main-container {
+  width: 480px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+form {
+  margin: 80px 0 0 0;
+}
+
+form input {
+  font-size: 44px;
+}
+
+ul#regex-list {
+  margin: 0;
+  padding: 0;
+}
+
+ul#regex-list .matched {
+  color: yellow;
+}
+
+h2.title {
+  font-size: 22px;
+  color: #fff;
+  padding: 22px 0;
+}
