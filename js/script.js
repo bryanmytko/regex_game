@@ -10,16 +10,38 @@ $(document).ready(function(){
   var inbetween_text = $('.inbetween-text');
   var win_string = '<p class="win">Congrats! You are a RegEx Champion!</p>';
   var song = new Audio('audio/got.mp3');
+  var hint = $('.hint');
 
   var rounds = [
-    // { rules: "Testing", words: ["1", "2"], win_condition: ["1"] }
+    { rules: "Let's start easy. Match House Lannister",
+      words: ["House Lannister", "House Baratheon", "Hodor"],
+      win_condition: ["House Lannister"],
+      hint: "This one is too easy for a hint.",
+    },
+    { rules: "A Lannister always pays their debts. Find the numeric strings!",
+      words: ["4000", "#ccffcc", "49299", "c-3p0", "r2-d2", "1", "99999"],
+      win_condition: ["4000", "49299", "1", "99999"],
+      hint: "Try using the digit shortcut \d."
+    },
+    { rules: "Spoiler Alert! Match every character whose name starts with \"M\"",
+      words: ["Melisandre", "Stannis", "Robb Stark", "Margaery Tyrell", "Joffrey Baratheon"],
+      win_condition: ["Melisandre", "Margaery Tyrell"],
+      hint: "Look up greedy matches."
+    },
     { rules: "Match only the Stark children.",
       words: ["Bran Stark", "Rickon Stark", "Jon Snow", "Arya Stark", "Sansa Stark", "Robb Stark", "Theon Greyjoy"],
-      win_condition: ["Bran Stark", "Rickon Stark", "Arya Stark", "Sansa Stark", "Robb Stark"]
+      win_condition: ["Bran Stark", "Rickon Stark", "Arya Stark", "Sansa Stark", "Robb Stark"],
+      hint: "What's the pattern here? They all end with 'Stark'!"
+    },
+    { rules: "Match the brothers Clegane",
+      words: ["Gregor 'The Mountain That Rides' Clegane", "Sandor 'The Hound' Clegane"],
+      win_condition: ["Gregor 'The Mountain That Rides' Clegane", "Sandor 'The Hound' Clegane"],
+      hint: "Using the pipe character allows you to specify OR like so: (a|b)"
     },
     { rules: "Daenerys is in trouble. Match the valid phone number so Tyrion can call and warn her!",
       words: ["333-5554-2993", "516-555-3722", "440-22d-9393", "7999-3333", "8-9-9"],
-      win_condition: ["516-555-3722"]
+      win_condition: ["516-555-3722"],
+      hint: "Remember the curly brackets {} allow you to specify a specific number of matched characters."
     }
   ];
 
@@ -67,6 +89,8 @@ $(document).ready(function(){
         } else {
           current_matches[i] = "";
         }
+
+        console.log(current_matches);
       }
     });
   }
@@ -108,6 +132,7 @@ $(document).ready(function(){
         .prepend(win_string);
 
       form.unbind();
+      hint.hide();
       song.play();
     }
   }
@@ -121,7 +146,8 @@ $(document).ready(function(){
   }
 
   function populate_state(){
-    title.html(rounds[current_round].rules);
+    var current = rounds[current_round];
+    title.html(current.rules);
     list.children().remove();
     regex_input.val("");
 
@@ -129,6 +155,8 @@ $(document).ready(function(){
       var li = $(list_item).text(el);
       list.append(li);
     });
+
+    hint.html(current.hint);
   }
 
   function initialize(){
