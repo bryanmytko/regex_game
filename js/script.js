@@ -98,6 +98,7 @@ $(document).ready(function(){
         }
       } else {
         var text = _this.text();
+        current_matches[i] = "";
         _this.find("span").remove();
         _this.text(text);
       }
