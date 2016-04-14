@@ -58,11 +58,13 @@ $(document).ready(function(){
     "Very good! Let's try another"
   ];
 
-  regex_input.keyup(function(e){
+  regex_input.keyup(function(){
     var pattern = regex_input.val();
     highlight_pattern(pattern);
     check_win_condition();
   });
+
+  form.submit(function(e){ e.preventDefault(); });
 
   form.on("click", ".inbetween-text", function(){
     populate_next_round();
