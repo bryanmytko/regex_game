@@ -38,9 +38,9 @@ $(document).ready(function(){
       win_condition: ["Gregor 'The Mountain That Rides' Clegane", "Sandor 'The Hound' Clegane"],
       hint: "Using the pipe character allows you to specify OR like so: (a|b)"
     },
-    { rules: "Daenerys is in trouble. Match the valid phone number so Tyrion can call and warn her!",
-      words: ["333-5554-2993", "516-555-3722", "440-22d-9393", "7999-3333", "8-9-9"],
-      win_condition: ["516-555-3722"],
+    { rules: "Daenerys is in trouble. Match the valid phone numbers so Tyrion can call and warn her!",
+      words: ["333-5554-2993", "516-555-3722", "440-22d-9393", "917-555-9830", "7999-3333", "8-9-9"],
+      win_condition: ["516-555-3722", "917-555-9830"],
       hint: "Remember the curly brackets {} allow you to specify a specific number of matched characters."
     },
     { rules: "Passwords to TheDreadFort.com must be secure! Match all passwords that include at least 1 non alphanumeric character.",
