@@ -94,6 +94,10 @@ $(document).ready(function(){
         } else {
           current_matches[i] = "";
         }
+      } else {
+        var text = _this.text();
+        _this.find("span").remove();
+        _this.text(text);
       }
     });
   }
