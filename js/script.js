@@ -34,7 +34,7 @@ $(document).ready(function(){
       hint: "What's the pattern here? They all end with 'Stark'!"
     },
     { rules: "Match the brothers Clegane",
-      words: ["Gregor 'The Mountain That Rides' Clegane", "Sandor 'The Hound' Clegane"],
+      words: ["Gregor 'The Mountain That Rides' Clegane", "Sandor 'The Hound' Clegane", "Grey Worm"],
       win_condition: ["Gregor 'The Mountain That Rides' Clegane", "Sandor 'The Hound' Clegane"],
       hint: "Using the pipe character allows you to specify OR like so: (a|b)"
     },
@@ -44,8 +44,8 @@ $(document).ready(function(){
       hint: "Remember the curly brackets {} allow you to specify a specific number of matched characters."
     },
     { rules: "Passwords to TheDreadFort.com must be secure! Match all passwords that include at least 1 non alphanumeric character.",
-      words: ["password123", "pa55w0rD!", "r00sebolt0n9^", "r4msaySn0w"],
-      win_condition: ["pa55w0rD!", "r00sebolt0n9^"],
+      words: ["password123", "pa55w0rD!a9", "r00sebolt0n9^", "r4msaySn0w"],
+      win_condition: ["pa55w0rD!a9", "r00sebolt0n9^"],
       hint: "This one is tricky! Do your best."
     }
   ];
@@ -94,8 +94,6 @@ $(document).ready(function(){
         } else {
           current_matches[i] = "";
         }
-
-        console.log(current_matches);
       }
     });
   }
@@ -117,7 +115,7 @@ $(document).ready(function(){
     }
   }
 
-  function random_inbetween_text(){
+  function continue_prompt(){
     var link = " Click to continue! &#9658;";
     return completed_text[Math.floor(Math.random()*completed_text.length)] + link;
   }
@@ -127,7 +125,7 @@ $(document).ready(function(){
       regex_input.hide();
       inbetween_text
         .show()
-        .html(random_inbetween_text());
+        .html(continue_prompt());
     } else {
       regex_input.remove();
       inbetween_text
