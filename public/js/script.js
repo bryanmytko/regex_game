@@ -59,14 +59,6 @@ $(document).ready(function(){
     }
   ];
 
-  var completed_text = [
-    "Nice Job!",
-    "Great! Keep it up!",
-    "You know nothing Jon Snow...",
-    "Correct! Nice!",
-    "Very good! Let's try another"
-  ];
-
   game_input.keyup(function(){
     var pattern = game_input.val();
     highlight_pattern(pattern);
@@ -141,6 +133,14 @@ $(document).ready(function(){
 
   function continue_prompt(){
     var link = " Click to continue! &#9658;";
+    var completed_text = [
+      "Nice Job!",
+      "Great! Keep it up!",
+      "You know nothing " + name + " Snow...",
+      "Correct! Nice!",
+      "Very good! Let's try another"
+    ];
+
     return completed_text[Math.floor(Math.random()*completed_text.length)] + link;
   }
 

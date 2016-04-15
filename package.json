@@ -1,0 +1,25 @@
+{
+  "name": "got_regex",
+  "version": "1.0.0",
+  "description": "A regex game.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "mustache": "^2.2.1",
+    "mustache-express": "^1.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bryanmytko/regex_game.git"
+  },
+  "author": "Bryan Mytko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bryanmytko/regex_game/issues"
+  },
+  "homepage": "https://github.com/bryanmytko/regex_game#readme"
+}
