@@ -1,6 +1,8 @@
 # Regex Game
 
-A simple game for testing regex pattern matching.
+A Game of Thrones based game for testing regex pattern matching.
+
+Demo: http://got.bryanmytko.com/
 
       _______  _______  _______  _______          
       (  ____ )(  ____ \(  ____ \(  ____ \|\     /|
