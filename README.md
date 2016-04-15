@@ -1,6 +1,6 @@
 # Game of Thrones: A Regex Game
 
-A game for testing regex pattern matching.
+### A game for testing regex pattern matching.
 
 Demo: http://got.bryanmytko.com/
 
