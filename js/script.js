@@ -2,17 +2,26 @@ $(document).ready(function(){
 
   var current_round = 0;
   var current_matches = [];
-  var form = $('form');
-  var regex_input = $('#regex-input');
+  var form = $('form#game');
+  var intro_form = $('form#intro');
+  var game_container = $('div.regex');
+  var game_input = $('#regex-input');
   var list = $('ul#regex-list');
   var title = $('h2.title');
   var list_item = '<li class="list-group-item"></li>';
   var inbetween_text = $('.inbetween-text');
   var win_string = '<p class="win">Congrats! You are a RegEx Champion!</p>';
+  var leaderboard = $('div#leaderboard');
   var song = new Audio('audio/got.mp3');
   var hint = $('.hint');
+  var name, start_time, final_time;
 
   var rounds = [
+    // { rules: "Testing: Debugging",
+    //   words: ["1","2"],
+    //   win_condition: ["1"],
+    //   hint: "Hello.",
+    // },
     { rules: "Let's start easy. Match House Lannister",
       words: ["House Lannister", "House Baratheon", "Hodor"],
       win_condition: ["House Lannister"],
@@ -58,10 +67,18 @@ $(document).ready(function(){
     "Very good! Let's try another"
   ];
 
-  regex_input.keyup(function(){
-    var pattern = regex_input.val();
+  game_input.keyup(function(){
+    var pattern = game_input.val();
     highlight_pattern(pattern);
     check_win_condition();
+  });
+
+  intro_form.submit(function(e){
+    name = $(this).children('input[name=name]').val();
+    $(this).hide();
+    initialize();
+    populate_state();
+    e.preventDefault();
   });
 
   form.submit(function(e){ e.preventDefault(); });
@@ -129,12 +146,15 @@ $(document).ready(function(){
 
   function complete_round(){
     if(current_round < rounds.length - 1){
-      regex_input.hide();
+      game_input.hide();
       inbetween_text
         .show()
         .html(continue_prompt());
     } else {
-      regex_input.remove();
+      final_time = stop_timer();
+      populate_leaderboard();
+
+      game_input.remove();
       inbetween_text
         .show()
         .addClass("winner")
@@ -150,7 +170,7 @@ $(document).ready(function(){
   function populate_next_round(){
     current_matches = [];
     inbetween_text.hide()
-    regex_input.show();
+    game_input.show();
     current_round += 1;
     populate_state();
   }
@@ -159,7 +179,7 @@ $(document).ready(function(){
     var current = rounds[current_round];
     title.html(current.rules);
     list.children().remove();
-    regex_input.val("");
+    game_input.val("");
 
     rounds[current_round].words.forEach(function(el){
       var li = $(list_item).text(el);
@@ -169,9 +189,39 @@ $(document).ready(function(){
     hint.html(current.hint);
   }
 
-  function initialize(){
-    populate_state();
+  var dummy_leaderboard = {
+    "values":
+      [
+        { "name": "Bryan", "time": "1m22s" },
+        { "name": "JBell", "time": "1m33s" },
+        { "name": "Dennis L.", "time": "2m55s" },
+        { "name": "Marina", "time": "3m12s" },
+        { "name": "Shawn", "time": "5m01s" }
+      ]
+  };
+
+  function populate_leaderboard(){
+    return; // early return, feature incomplete
+
+    //  Add time to db
+    // Fetch top ~10 results
+    var list = leaderboard.children('ol');
+    leaderboard.show();
+    dummy_leaderboard["values"].forEach(function(el){
+      list.append('<li>' + el.name + ' <span>(' + el.time + ')</span></li>');
+    });
   }
 
-  initialize();
+  function stop_timer(){
+    /* @TODO Better time output, probably in minutes */
+    var t = new Date().getTime() - start_time;
+    var elapsed = Math.floor(t / 10) / 100;
+    return elapsed.toFixed(2);
+  }
+
+  function initialize(){
+    start_time = new Date().getTime();
+    game_container.show();
+    form.show();
+  }
 });

@@ -37,8 +37,13 @@ header {
   padding: 34px;
 }
 
-form {
+form#game {
+  display: none;
   margin: 40px 0 0 0;
+}
+
+form label {
+  font-weight: normal;
 }
 
 form input {
@@ -47,6 +52,10 @@ form input {
 
 form p a {
   cursor: pointer;
+}
+
+div.regex {
+  display: none;
 }
 
 ul#regex-list {
@@ -85,9 +94,40 @@ p.win {
 }
 
 .winner {
-  height: 336px;
-  background: url(../img/tyrion.png);
+  background: url(../img/dragon.jpg) -2px -40px;
   padding: 0;
+}
+
+#leaderboard {
+  margin-top: 40px;
+  border-radius: 6px;
+  padding: 20px;
+  display: none;
+  background: #232323;
+}
+
+#leaderboard h2 {
+  font-family: got, serif;
+  margin: 0;
+  letter-spacing: 2px;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+#leaderboard ol {
+  list-style-position: inside;
+  margin: 20px 0 0 0;
+  padding: 0;
+}
+
+#leaderboard ol li {
+  font-size: 16px;
+}
+
+#leaderboard ol li span {
+  font-size: 14px;
+  color: #fff;
 }
 
 .hint {
