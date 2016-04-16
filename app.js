@@ -1,3 +1,5 @@
+var require('dotenv').config();
+
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -18,7 +20,7 @@ app.listen(5000, function () {
 });
 
 /* Test Mongodb */
-var url = 'mongodb://localhost:27017/got';
+var url = 'mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT + '/' + process.env.DB_NAME;
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
   console.log("Connected correctly to server.");
