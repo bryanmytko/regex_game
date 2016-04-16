@@ -1,5 +1,6 @@
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
 var mustacheExpress = require('mustache-express');
 var app = express();
 
@@ -16,7 +17,8 @@ app.listen(5000, function () {
     console.log('Listening on port 5000!');
 });
 
-var url = 'mongodb://localhost:27017/test';
+/* Test Mongodb */
+var url = 'mongodb://localhost:27017/got';
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
   console.log("Connected correctly to server.");
