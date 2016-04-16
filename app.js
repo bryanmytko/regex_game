@@ -14,6 +14,8 @@ app.get('/', function(req, res) {
   var collection = db.get().collection('scorecollection');
   high_scores = collection.find().limit(2);
 
+  // @TODO Make data available to view
+  // @TODO Add post method for inserting high scores
   console.log(typeof(high_scores));
 
   res.render('index');
