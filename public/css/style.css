@@ -123,6 +123,7 @@ p.win {
 
 #leaderboard ol li {
   font-size: 16px;
+  margin: 12px 0;
 }
 
 #leaderboard ol li span {

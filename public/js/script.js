@@ -189,27 +189,26 @@ $(document).ready(function(){
     hint.html(current.hint);
   }
 
-  var dummy_leaderboard = {
-    "values":
-      [
-        { "name": "Bryan", "time": "1m22s" },
-        { "name": "JBell", "time": "1m33s" },
-        { "name": "Dennis L.", "time": "2m55s" },
-        { "name": "Marina", "time": "3m12s" },
-        { "name": "Shawn", "time": "5m01s" }
-      ]
-  };
+  function update_leaderboard(data){
+    var list = leaderboard.children('ol');
+    var scores = JSON.parse(data);
+
+    scores.forEach(function(score){
+      list.append(
+        '<li>' + score.name + ' <span>(' + score.time + ')</span></li>'
+      );
+    });
+
+    leaderboard.show();
+  }
 
   function populate_leaderboard(){
-    return; // early return, feature incomplete
-
-    //  Add time to db
-    // Fetch top ~10 results
-    var list = leaderboard.children('ol');
-    leaderboard.show();
-    dummy_leaderboard["values"].forEach(function(el){
-      list.append('<li>' + el.name + ' <span>(' + el.time + ')</span></li>');
-    });
+    $.ajax({
+      url: '/leaderboard',
+      method: 'post',
+      data: { "name": "bryano", "time": "1" },
+      success: update_leaderboard
+    })
   }
 
   function stop_timer(){
@@ -220,6 +219,7 @@ $(document).ready(function(){
   }
 
   function initialize(){
+    // @DEBUG populate_leaderboard();
     start_time = new Date().getTime();
     game_container.show();
     form.show();
