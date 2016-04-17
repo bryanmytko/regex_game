@@ -10,16 +10,19 @@ app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
 
-app.get('/', function(req, res) {
-  var collection = db.get().collection('scorecollection');
-  high_scores = collection.find().limit(2);
-
-  // @TODO Make data available to view
-  // @TODO Add post method for inserting high scores
-  console.log(typeof(high_scores));
-
+app.get('/', function(req, res){
   res.render('index');
 });
+
+app.post('/leaderboard', function(req, res){
+  var collection = db.get().collection('scorecollection');
+
+  collection.find().toArray(function(err, high_scores) {
+    res.send(JSON.stringify(high_scores));
+  })
+});
+
+// @TODO Add post method for inserting high scores
 
 db.connect(function(err){
   if(err){
