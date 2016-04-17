@@ -17,7 +17,7 @@ app.get('/', function(req, res){
 app.post('/leaderboard', function(req, res){
   var collection = db.get().collection('scorecollection');
 
-  collection.find().toArray(function(err, high_scores) {
+  collection.find().limit(10).toArray(function(err, high_scores) {
     res.send(JSON.stringify(high_scores));
   })
 });
