@@ -33,7 +33,11 @@
       </form>
       <div id="leaderboard">
         <h2>Leaderboard</h2>
-        <ol></ol>
+        <ol>
+          {{#high_scores}}
+            <li>{{name}} <span>({{time}})</span></li>
+          {{/high_scores}}
+        </ol>
       </div>
     </div>
   </body>
