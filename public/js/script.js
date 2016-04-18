@@ -206,7 +206,7 @@ $(document).ready(function(){
     $.ajax({
       url: '/leaderboard',
       method: 'post',
-      data: { "name": "bryano", "time": "1" },
+      data: { "name": "bryano", "time": "1" }, // @TODO real data, need timer.
       success: update_leaderboard
     })
   }
