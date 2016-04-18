@@ -206,7 +206,7 @@ $(document).ready(function(){
     $.ajax({
       url: '/leaderboard',
       method: 'post',
-      data: { "name": name, "time": Math.floor(Math.random() * 1000) }, // @TODO real data, need timer.
+      data: { "name": name, "time": stop_timer() },
       success: update_leaderboard
     })
   }
@@ -219,7 +219,6 @@ $(document).ready(function(){
   }
 
   function initialize(){
-    // @DEBUG populate_leaderboard();
     start_time = new Date().getTime();
     game_container.show();
     form.show();

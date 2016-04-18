@@ -21,11 +21,16 @@ app.get('/', function(req, res){
 
 app.post('/leaderboard', function(req, res){
   var collection = db.get().collection('scorecollection');
-  collection.insert([{  name: req.body.name, time: req.body.time }])
 
-  collection.find().limit(10).sort({ time: 1 }).toArray(function(err, high_scores) {
-    res.send(JSON.stringify(high_scores));
-  })
+  collection.insert([{  name: req.body.name, time: Number(req.body.time) }])
+
+  collection
+    .find()
+    .limit(10)
+    .sort({ time: 1 })
+    .toArray(function(err, high_scores) {
+      res.send(JSON.stringify(high_scores));
+    })
 });
 
 db.connect(function(err){
