@@ -15,19 +15,15 @@ app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
 
-
 app.get('/', function(req, res){
   res.render('index');
 });
 
 app.post('/leaderboard', function(req, res){
-  // @TODO Insert into db
-  console.log(req.body.name);
-  console.log(req.body.time);
-
   var collection = db.get().collection('scorecollection');
+  collection.insert([{  name: req.body.name, time: req.body.time }])
 
-  collection.find().limit(10).toArray(function(err, high_scores) {
+  collection.find().limit(10).sort({ time: 1 }).toArray(function(err, high_scores) {
     res.send(JSON.stringify(high_scores));
   })
 });
