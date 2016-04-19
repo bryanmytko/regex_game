@@ -28,10 +28,26 @@ app.get('/leaderboard', function(req, res){
     .limit(10)
     .sort({ time: 1 })
     .toArray(function(err, high_scores) {
-      res.render('leaderboard', { high_scores: high_scores });
+      res.render('leaderboard', {
+        high_scores: high_scores,
+        time_formatter: function() {
+          return function(t_raw, render){
+            var t = render(t_raw);
+            var sec_num = parseInt(t, 10) / 1000;
+            var minutes = Math.floor(sec_num / 60);
+            var seconds = Math.floor(sec_num - (minutes * 60));
+            var ms = Math.floor((sec_num - (minutes * 60) - seconds) * 100);
+
+            if (minutes < 10) { minutes = "0" + minutes; }
+            if (seconds < 10) { seconds = "0" + seconds; }
+            if (ms < 10) { ms = "0" + ms;}
+            var time = minutes + ':' + seconds + ':' + ms;
+            return time;
+          }
+        }
+      });
     })
 });
-
 app.post('/leaderboard', function(req, res){
   var collection = db.get().collection('scorecollection');
   collection.insert([{  name: req.body.name, time: Number(req.body.time) }])
@@ -55,3 +71,4 @@ db.connect(function(err){
     });
   }
 });
+

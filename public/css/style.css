@@ -3,6 +3,12 @@
   src: url(../fonts/got.ttf);
 }
 
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 body {
   background: url(../img/westeros.jpg) 0 0 #000 no-repeat;
   background-size: cover;
@@ -35,6 +41,10 @@ header {
 }
 
 .main-container {
+  min-height: 500px;
+}
+
+.game-container {
   width: 480px;
   margin: 34px auto;
   background: #3F4950;
@@ -143,4 +153,29 @@ p.win {
 
 .hint:before {
   content: "Hint: ";
+}
+
+footer {
+  padding: 12px;
+  width: 100%;
+  background: #232323;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  font-size: 11px;
+}
+
+footer .footer-container {
+  width: 680px;
+  margin: 0 auto;
+}
+
+footer p {
+  color: #c8c8c8;
+  float: left;
+  margin: 0;
+}
+
+footer a {
+  color: #c8c8c8;
+  float: right;
 }

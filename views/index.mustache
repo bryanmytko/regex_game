@@ -1,46 +1,30 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Game of Thrones: Regex</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/js/script.js"></script>
-  </head>
-  <body>
-    <header>
-      <h1>
-        <a href="/">^Game of Throne{s}</a>
-      </h1>
-      <div class="rules">Based on the rules for each round, match the entire lines specified only. Partial matches won't count!</div>
-    </header>
+{{> header}}
     <div class="main-container">
-      <div class="regex list-group" id="regex-container">
-        <h2 class="title"></h2>
-        <ul id="regex-list">
-        </ul>
-      </div>
-      <form id="intro">
-        <label for="name" class="control-label">What is your name?</label>
-        <input type="text" name="name" class="form-control" id="name" />
-      </form>
-      <form id="game">
-        <div class="inbetween-text alert alert-warning">
-          <p></p>
+      <div class="game-container">
+        <div class="regex list-group" id="regex-container">
+          <h2 class="title"></h2>
+          <ul id="regex-list">
+          </ul>
         </div>
-        <input type="text" class="form-control" id="regex-input" />
-        <p class="hint"></p>
-      </form>
-      <div id="leaderboard">
-        <h2>Leaderboard</h2>
-        <ol>
-          {{#high_scores}}
-            <li>{{name}} <span>({{time}})</span></li>
-          {{/high_scores}}
-        </ol>
+        <form id="intro">
+          <label for="name" class="control-label">What is your name?</label>
+          <input type="text" name="name" class="form-control" id="name" />
+        </form>
+        <form id="game">
+          <div class="inbetween-text alert alert-warning">
+            <p></p>
+          </div>
+          <input type="text" class="form-control" id="regex-input" />
+          <p class="hint"></p>
+        </form>
+        <div id="leaderboard">
+          <h2>Leaderboard</h2>
+          <ol>
+            {{#high_scores}}
+              <li>{{name}} <span>({{time}})</span></li>
+            {{/high_scores}}
+          </ol>
+        </div>
       </div>
     </div>
-  </body>
-</html>
+{{> footer}}

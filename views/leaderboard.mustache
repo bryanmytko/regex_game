@@ -1,28 +1,14 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Game of Thrones: Regex | Leaderboard</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  </head>
-  <body>
-    <header>
-      <h1>
-        <a href="/">^Game of Throne{s}</a>
-      </h1>
-    </header>
+{{> header}}
     <div class="main-container">
-      <div id="leaderboard" style="display:block; margin-top: 0;">
-        <h2>Leaderboard</h2>
-        <ol>
-          {{#high_scores}}
-            <li>{{name}} <span>({{time}})</span></li>
-          {{/high_scores}}
-        </ol>
+      <div class="game-container">
+        <div id="leaderboard" style="display:block; margin-top: 0;">
+          <h2>Leaderboard</h2>
+          <ol>
+            {{#high_scores}}
+            <li>{{name}} <span>({{#time_formatter}}{{time}}{{/time_formatter}})</span></li>
+            {{/high_scores}}
+          </ol>
+        </div>
       </div>
     </div>
-  </body>
-</html>
+{{> footer}}
