@@ -1,20 +1,35 @@
 $(document).ready(function(){
 
-  var current_round = 0;
-  var current_matches = [];
-  var form = $('form#game');
-  var intro_form = $('form#intro');
-  var game_container = $('div.regex');
-  var game_input = $('#regex-input');
-  var list = $('ul#regex-list');
-  var title = $('h2.title');
-  var list_item = '<li class="list-group-item"></li>';
-  var inbetween_text = $('.inbetween-text');
-  var win_string = '<p class="win">Congrats! You are a RegEx Champion!</p>';
-  var leaderboard = $('div#leaderboard');
+  var name,
+    start_time,
+    final_time,
+    current_round = 0,
+    current_matches = [];
+
+  var form = $('form#game'),
+    intro_form = $('form#intro'),
+    game_container = $('div#regex-container'),
+    game_input = $('#regex-input'),
+    list = $('ul#regex-list'),
+    title = $('h2.title'),
+    inbetween_text = $('.inbetween-text'),
+    leaderboard = $('div#leaderboard'),
+    leaderboard_list = leaderboard.children('ol'),
+    hint = $('.hint');
+
+  var win_string = '<p class="win">Congrats! You are a RegEx Champion!</p>',
+    list_item = '<li class="list-group-item"></li>',
+    link = " Click to continue! &#9658;";
+
   var song = new Audio('audio/got.mp3');
-  var hint = $('.hint');
-  var name, start_time, final_time;
+
+  var completed_text = [
+    "Nice Job!",
+    "Great! Keep it up!",
+    "You know nothing " + name + " Snow...",
+    "Correct! Nice!",
+    "Very good! Let's try another"
+  ];
 
   var rounds = [
     // { rules: "Testing: Debugging",
@@ -70,6 +85,7 @@ $(document).ready(function(){
     $(this).hide();
     initialize();
     populate_state();
+
     e.preventDefault();
   });
 
@@ -78,6 +94,19 @@ $(document).ready(function(){
   form.on("click", ".inbetween-text", function(){
     populate_next_round();
   });
+
+  String.prototype.to_leaderboard_time = function () {
+    var sec_num = parseInt(this, 10) / 1000;
+    var minutes = Math.floor(sec_num / 60);
+    var seconds = Math.floor(sec_num - (minutes * 60));
+    var ms = Math.floor((sec_num - (minutes * 60) - seconds) * 100);
+
+    if (minutes < 10) { minutes = "0" + minutes; }
+    if (seconds < 10) { seconds = "0" + seconds; }
+    if (ms < 10) { ms = "0" + ms;}
+    var time = minutes + ':' + seconds + ':' + ms;
+    return time;
+  }
 
   function highlight_pattern(string_pattern){
     // User input might be incomplete resulting in invalid RegExp, which we
@@ -126,21 +155,14 @@ $(document).ready(function(){
 
     /* Oh, javascript */
     if(win_condition.length == current_condition.length
-        && win_condition.every(function(v,i){ return current_condition.indexOf(v) !== -1; })){
-      complete_round();
-    }
+        && win_condition.every(function(v,i){
+          return current_condition.indexOf(v) !== -1;
+        })){
+          complete_round();
+        }
   }
 
   function continue_prompt(){
-    var link = " Click to continue! &#9658;";
-    var completed_text = [
-      "Nice Job!",
-      "Great! Keep it up!",
-      "You know nothing " + name + " Snow...",
-      "Correct! Nice!",
-      "Very good! Let's try another"
-    ];
-
     return completed_text[Math.floor(Math.random()*completed_text.length)] + link;
   }
 
@@ -190,12 +212,15 @@ $(document).ready(function(){
   }
 
   function update_leaderboard(data){
-    var list = leaderboard.children('ol');
     var scores = JSON.parse(data);
 
     scores.forEach(function(score){
-      list.append(
-        '<li>' + score.name + ' <span>(' + score.time + ')</span></li>'
+      leaderboard_list.append(
+        '<li>'
+        + score.name
+        + ' <span>('
+        + String(score.time).to_leaderboard_time()
+        + ')</span></li>'
       );
     });
 
@@ -208,14 +233,12 @@ $(document).ready(function(){
       method: 'post',
       data: { "name": name, "time": stop_timer() },
       success: update_leaderboard
-    })
+    });
   }
 
   function stop_timer(){
-    /* @TODO Better time output, probably in minutes */
-    var t = new Date().getTime() - start_time;
-    var elapsed = Math.floor(t / 10) / 100;
-    return elapsed.toFixed(2);
+    var time = new Date().getTime() - start_time;
+    return time;
   }
 
   function initialize(){

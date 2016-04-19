@@ -21,7 +21,6 @@ app.get('/', function(req, res){
 
 app.post('/leaderboard', function(req, res){
   var collection = db.get().collection('scorecollection');
-
   collection.insert([{  name: req.body.name, time: Number(req.body.time) }])
 
   collection
@@ -43,4 +42,3 @@ db.connect(function(err){
     });
   }
 });
-
