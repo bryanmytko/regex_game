@@ -18,6 +18,10 @@ h1 {
   text-shadow: 1px 1px 2px black;
 }
 
+h1 a:hover {
+  text-decoration: none;
+}
+
 header {
   background: rgba(0, 0, 0, 0.5);
 }

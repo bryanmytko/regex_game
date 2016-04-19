@@ -19,6 +19,19 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
+app.get('/leaderboard', function(req, res){
+  /* @TODO move to method */
+  var collection = db.get().collection('scorecollection');
+
+  collection
+    .find()
+    .limit(10)
+    .sort({ time: 1 })
+    .toArray(function(err, high_scores) {
+      res.render('leaderboard', { high_scores: high_scores });
+    })
+});
+
 app.post('/leaderboard', function(req, res){
   var collection = db.get().collection('scorecollection');
   collection.insert([{  name: req.body.name, time: Number(req.body.time) }])
