@@ -1,9 +1,11 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-var url = 'mongodb://' + process.env.DB_HOST
-                       + ':' + process.env.DB_PORT
-                       + '/' + process.env.DB_NAME;
+// var url = 'mongodb://' + process.env.DB_HOST
+//                        + ':' + process.env.DB_PORT
+//                        + '/' + process.env.DB_NAME;
+//
+var url = process.env.MONGO_URL;
 
 var state = {
   db: null
