@@ -1,42 +1,17 @@
 $(document).ready(function(){
 
-  var name,
-    start_time,
-    final_time,
-    current_round = 0,
-    current_matches = [];
+  var intro_form = $('form#intro');
 
-  var form = $('form#game'),
-    intro_form = $('form#intro'),
-    game_container = $('div#regex-container'),
-    game_input = $('#regex-input'),
-    list = $('ul#regex-list'),
-    title = $('h2.title'),
-    inbetween_text = $('.inbetween-text'),
-    leaderboard = $('div#leaderboard'),
-    leaderboard_list = leaderboard.children('ol'),
-    hint = $('.hint');
 
-  var win_string = '<p class="win">Congrats! You are a RegEx Champion!</p>',
-    list_item = '<li class="list-group-item"></li>',
-    link = " Click to continue! &#9658;";
-
-  var song = new Audio('audio/got.mp3');
-
-  var completed_text = [
+  var completed = [
     "Nice Job!",
     "Great! Keep it up!",
-    "You know nothing " + name + " Snow...",
+    "You know nothing Jon Snow...",
     "Correct! Nice!",
     "Very good! Let's try another"
   ];
 
   var rounds = [
-    // { rules: "Testing: Debugging",
-    //   words: ["1","2"],
-    //   win_condition: ["1"],
-    //   hint: "Hello.",
-    // },
     { rules: "Let's start easy. Match House Lannister",
       words: ["House Lannister", "House Baratheon", "Hodor"],
       win_condition: ["House Lannister"],
@@ -73,164 +48,211 @@ $(document).ready(function(){
       hint: "This one is tricky! Do your best."
     }
   ];
+  //
+  // game_input.keyup(function(){
+  //   var pattern = game_input.val();
+  //   highlight_pattern(pattern);
+  //   check_win_condition();
+  // });
+  //
+  //
+  // form.submit(function(e){ e.preventDefault(); });
+  //
+  // form.on("click", ".inbetween-text", function(){
+  //   populate_next_round();
+  // });
+  //
+  // function highlight_pattern(string_pattern){
+  //   // User input might be incomplete resulting in invalid RegExp, which we
+  //   // shouldn't care about.
+  //   try {
+  //     var pattern = new RegExp(string_pattern, "i");
+  //   } catch(e) {
+  //     var pattern = new RegExp();
+  //   }
+  //
+  //   list.children("li").each(function(i){
+  //     var _this = $(this);
+  //     var _this_text = _this.text();
+  //     var m = _this_text.match(pattern);
+  //
+  //     if(m !== undefined && m !== null && m.length > 0){
+  //       var match = m[0];
+  //       var new_text = _this_text.replace(
+  //         match, '<span class="matched">' + match + '</span>'
+  //       );
+  //       _this.html(new_text);
+  //
+  //       if(_this_text === match){
+  //         current_matches[i] = match;
+  //       } else {
+  //         current_matches[i] = "";
+  //       }
+  //     } else {
+  //       var text = _this.text();
+  //       current_matches[i] = "";
+  //       _this.find("span").remove();
+  //       _this.text(text);
+  //     }
+  //   });
+  // }
+  //
+  // function check_full_match(match, obj){
+  //   if(match.length === obj.text().length){
+  //     obj.fadeOut();
+  //   }
+  // }
+  //
+  // function check_win_condition(){
+  //   var win_condition = rounds[current_round].win_condition;
+  //   var current_condition = current_matches.filter(Boolean);
+  //
+  //   #<{(| Oh, javascript |)}>#
+  //   if(win_condition.length == current_condition.length
+  //       && win_condition.every(function(v,i){
+  //         return current_condition.indexOf(v) !== -1;
+  //       })){
+  //         complete_round();
+  //       }
+  // }
+  //
+  // function continue_prompt(){
+  //   return completed_text[Math.floor(Math.random()*completed_text.length)] + link;
+  // }
+  //
+  // function complete_round(){
+  //   if(current_round < rounds.length - 1){
+  //     game_input.hide();
+  //     inbetween_text
+  //       .show()
+  //       .html(continue_prompt());
+  //   } else {
+  //     final_time = stop_timer();
+  //     populate_leaderboard();
+  //
+  //     game_input.remove();
+  //     inbetween_text
+  //       .show()
+  //       .addClass("winner")
+  //       .html("")
+  //       .prepend(win_string);
+  //
+  //     form.unbind();
+  //     hint.hide();
+  //     song.play();
+  //   }
+  // }
+  //
+  // function populate_next_round(){
+  //   current_matches = [];
+  //   inbetween_text.hide()
+  //   game_input.show();
+  //   current_round += 1;
+  //   populate_state();
+  // }
+  //
+  // function populate_state(){
+  // }
+  //
+  // function update_leaderboard(data){
+  //   var scores = JSON.parse(data);
+  //
+  //   scores.forEach(function(score){
+  //     leaderboard_list.append(
+  //       '<li>'
+  //       + score.name
+  //       + ' <span>('
+  //       + String(score.time).to_leaderboard_time()
+  //       + ')</span></li>'
+  //     );
+  //   });
+  //
+  //   leaderboard.show();
+  // }
+  //
+  // function populate_leaderboard(){
+  //   $.ajax({
+  //     url: '/leaderboard',
+  //     method: 'post',
+  //     data: { "name": name, "time": stop_timer() },
+  //     success: update_leaderboard
+  //   });
+  // }
+  //
+  // function stop_timer(){
+  //   var time = new Date().getTime() - start_time;
+  //   return time;
+  // }
+  //
+  // function initialize(){
+  // }
+  //
+  //
+  //@TODO where to put this
+  // var song = new Audio('audio/got.mp3');
 
-  game_input.keyup(function(){
-    var pattern = game_input.val();
-    highlight_pattern(pattern);
-    check_win_condition();
-  });
+  var RegexGame = function(options){
+    this.name,
+    this.start_time,
+    this.final_time,
+    this.current_round = 0,
+    this.current_matches = [],
+    this.game_container = $('div#game-container'),
+    this.game_input = $('#game-input'),
+    this.title = $('h2.title'),
+    this.form = $('form#game'),
+    this.list = $('ul#game-list'),
+    this.inbetween_text = $('.inbetween-text'),
+    this.leaderboard = $('div#leaderboard'),
+    this.hint = $('.hint'),
+    this.win_string = '<p class="win">Congrats! You are a RegEx Champion!</p>',
+    this.link = " Click to continue! &#9658;",
 
-  intro_form.submit(function(e){
-    name = $(this).children('input[name=name]').val();
-    $(this).hide();
-    initialize();
-    populate_state();
+    this.options = $.extend({
+      rounds: [
+        { rules: "Testing: Debugging",
+          words: ["1","2"],
+          win_condition: ["1"],
+          hint: "Hello.",
+        }
+      ],
+      completed: ["Great! Keep it up!"]
+    }, options);
+  };
+
+  RegexGame.prototype = {
+    start: function(){
+      this.start_time = new Date().getTime();
+      this.game_container.show();
+      this.form.show();
+      this.populate_state();
+    },
+
+    populate_state: function(){
+      var current = this.options.rounds[this.current_round];
+      var list = this.list;
+
+      this.title.html(current.rules);
+      this.list.children().remove();
+      this.game_input.val("");
+
+      current.words.forEach(function(el){
+        var li = '<li class="list-group-item"></li>';
+        list.append($(li).text(el));
+      });
+
+      this.hint.html(current.hint);
+    }
+  };
+
+  intro_form.on("submit", function(e){
+    var _this = $(this);
+    name = _this.children('input[name=name]').val();
+    _this.hide();
 
     e.preventDefault();
+
+    game = new RegexGame({ rounds: rounds, completed: completed, name: name });
+    game.start();
   });
-
-  form.submit(function(e){ e.preventDefault(); });
-
-  form.on("click", ".inbetween-text", function(){
-    populate_next_round();
-  });
-
-  function highlight_pattern(string_pattern){
-    // User input might be incomplete resulting in invalid RegExp, which we
-    // shouldn't care about.
-    try {
-      var pattern = new RegExp(string_pattern, "i");
-    } catch(e) {
-      var pattern = new RegExp();
-    }
-
-    list.children("li").each(function(i){
-      var _this = $(this);
-      var _this_text = _this.text();
-      var m = _this_text.match(pattern);
-
-      if(m !== undefined && m !== null && m.length > 0){
-        var match = m[0];
-        var new_text = _this_text.replace(
-          match, '<span class="matched">' + match + '</span>'
-        );
-        _this.html(new_text);
-
-        if(_this_text === match){
-          current_matches[i] = match;
-        } else {
-          current_matches[i] = "";
-        }
-      } else {
-        var text = _this.text();
-        current_matches[i] = "";
-        _this.find("span").remove();
-        _this.text(text);
-      }
-    });
-  }
-
-  function check_full_match(match, obj){
-    if(match.length === obj.text().length){
-      obj.fadeOut();
-    }
-  }
-
-  function check_win_condition(){
-    var win_condition = rounds[current_round].win_condition;
-    var current_condition = current_matches.filter(Boolean);
-
-    /* Oh, javascript */
-    if(win_condition.length == current_condition.length
-        && win_condition.every(function(v,i){
-          return current_condition.indexOf(v) !== -1;
-        })){
-          complete_round();
-        }
-  }
-
-  function continue_prompt(){
-    return completed_text[Math.floor(Math.random()*completed_text.length)] + link;
-  }
-
-  function complete_round(){
-    if(current_round < rounds.length - 1){
-      game_input.hide();
-      inbetween_text
-        .show()
-        .html(continue_prompt());
-    } else {
-      final_time = stop_timer();
-      populate_leaderboard();
-
-      game_input.remove();
-      inbetween_text
-        .show()
-        .addClass("winner")
-        .html("")
-        .prepend(win_string);
-
-      form.unbind();
-      hint.hide();
-      song.play();
-    }
-  }
-
-  function populate_next_round(){
-    current_matches = [];
-    inbetween_text.hide()
-    game_input.show();
-    current_round += 1;
-    populate_state();
-  }
-
-  function populate_state(){
-    var current = rounds[current_round];
-    title.html(current.rules);
-    list.children().remove();
-    game_input.val("");
-
-    rounds[current_round].words.forEach(function(el){
-      var li = $(list_item).text(el);
-      list.append(li);
-    });
-
-    hint.html(current.hint);
-  }
-
-  function update_leaderboard(data){
-    var scores = JSON.parse(data);
-
-    scores.forEach(function(score){
-      leaderboard_list.append(
-        '<li>'
-        + score.name
-        + ' <span>('
-        + String(score.time).to_leaderboard_time()
-        + ')</span></li>'
-      );
-    });
-
-    leaderboard.show();
-  }
-
-  function populate_leaderboard(){
-    $.ajax({
-      url: '/leaderboard',
-      method: 'post',
-      data: { "name": name, "time": stop_timer() },
-      success: update_leaderboard
-    });
-  }
-
-  function stop_timer(){
-    var time = new Date().getTime() - start_time;
-    return time;
-  }
-
-  function initialize(){
-    start_time = new Date().getTime();
-    game_container.show();
-    form.show();
-  }
 });
