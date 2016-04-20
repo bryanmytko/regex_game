@@ -9,9 +9,15 @@
   clear: both;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   background: url(../img/westeros.jpg) 0 0 #000 no-repeat;
   background-size: cover;
+  margin: 0 0 42px;
 }
 
 h1 {
@@ -156,12 +162,16 @@ p.win {
 }
 
 footer {
-  padding: 12px;
+  height: 42px;
   width: 100%;
   background: #232323;
   border-top: 1px solid #333;
   border-bottom: 1px solid #333;
+  padding: 12px;
   font-size: 11px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 footer .footer-container {
