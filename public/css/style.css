@@ -74,16 +74,16 @@ form p a {
   cursor: pointer;
 }
 
-div.regex {
+div.game {
   display: none;
 }
 
-ul#regex-list {
+ul#game-list {
   margin: 0;
   padding: 0;
 }
 
-ul#regex-list .matched {
+ul#game-list .matched {
   color: #DFE876;
 }
 
