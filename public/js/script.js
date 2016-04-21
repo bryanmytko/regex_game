@@ -48,12 +48,12 @@ $(document).ready(function(){
     }
   ];
 
-  var rounds = [{
-    rules: "Debug",
-    words: ["1", "2"],
-    win_condition: ["1"],
-    hint: "Debugging."
-  }];
+  // var rounds = [{
+  //   rules: "Debug",
+  //   words: ["1", "2"],
+  //   win_condition: ["1"],
+  //   hint: "Debugging."
+  // }];
 
   var RegexGame = function(options){
     var self = this;
