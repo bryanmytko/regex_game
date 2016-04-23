@@ -1,15 +1,5 @@
 $(document).ready(function(){
 
-  var intro_form = $('form#intro');
-
-  var completed = [
-    "Nice Job!",
-    "Great! Keep it up!",
-    "You know nothing Jon Snow...",
-    "Correct! Nice!",
-    "Very good! Let's try another"
-  ];
-
   var rounds = [
     { rules: "Let's start easy. Match House Lannister",
       words: ["House Lannister", "House Baratheon", "Hodor"],
@@ -125,7 +115,6 @@ $(document).ready(function(){
     },
 
     populate_leaderboard: function(){
-                            debugger;
       $.ajax({
         url: '/leaderboard',
         method: 'post',
@@ -254,11 +243,21 @@ $(document).ready(function(){
 
   };
 
+  var intro_form = $('form#intro');
+
   /* Start game when user submits their name */
   intro_form.on("submit", function(e){
     var _this = $(this);
     name = _this.children('input[name=name]').val();
     _this.hide();
+
+    var completed = [
+      "Nice Job!",
+      "Great! Keep it up!",
+      "You know nothing " + name + "...",
+      "Correct! Nice!",
+      "Very good! Let's try another"
+    ];
 
     game = new RegexGame({ rounds: rounds, completed: completed, name: name });
     game.start();
