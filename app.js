@@ -48,17 +48,22 @@ app.get('/leaderboard', function(req, res){
       });
     })
 });
+
 app.post('/leaderboard', function(req, res){
   var collection = db.get().collection('scorecollection');
-  collection.insert([{  name: req.body.name, time: Number(req.body.time) }])
-
-  collection
-    .find()
-    .limit(10)
-    .sort({ time: 1 })
-    .toArray(function(err, high_scores) {
-      res.send(JSON.stringify(high_scores));
-    })
+  collection.insert([{  name: req.body.name, time: Number(req.body.time) }], function(err) {
+    if (err) {
+      console.error.bind(console, 'error inserting new score into DB');
+    } else {
+      collection
+        .find()
+        .limit(10)
+        .sort({ time: 1 })
+        .toArray(function(err, high_scores) {
+          res.send(JSON.stringify(high_scores));
+        });
+    }
+  });
 });
 
 db.connect(function(err){
@@ -71,4 +76,3 @@ db.connect(function(err){
     });
   }
 });
-
