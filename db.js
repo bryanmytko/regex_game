@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-var url = process.env.MONGO_URL;
+var url = process.env.MONGO_URL || 'mongodb://localhost:27017/regex-game';
 
 var state = {
   db: null
