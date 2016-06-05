@@ -20,7 +20,6 @@ app.get('/', function(req, res){
 });
 
 app.get('/leaderboard', function(req, res){
-  /* @TODO move to method */
   var collection = db.get().collection('scorecollection');
 
   collection
@@ -48,6 +47,7 @@ app.get('/leaderboard', function(req, res){
       });
     })
 });
+
 app.post('/leaderboard', function(req, res){
   var collection = db.get().collection('scorecollection');
   collection.insert([{  name: req.body.name, time: Number(req.body.time) }])
@@ -71,4 +71,3 @@ db.connect(function(err){
     });
   }
 });
-
