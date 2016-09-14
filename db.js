@@ -1,9 +1,9 @@
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
-var url = process.env.MONGO_URL || 'mongodb://localhost:27017/regex-game';
+const url = process.env.MONGO_URL || 'mongodb://localhost:27017/regex-game';
 
-var state = {
+const state = {
   db: null
 };
 
