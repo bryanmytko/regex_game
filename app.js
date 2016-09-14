@@ -1,10 +1,12 @@
 require('dotenv').config();
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var mustacheExpress = require('mustache-express');
-var app = express();
-var db = require('./db');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mustacheExpress = require('mustache-express');
+const app = express();
+const db = require('./db');
+
+const MAX_NAME_LENGTH = 24;
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -20,7 +22,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/leaderboard', function(req, res){
-  var collection = db.get().collection('scorecollection');
+  const collection = db.get().collection('scorecollection');
 
   collection
     .find()
@@ -29,28 +31,17 @@ app.get('/leaderboard', function(req, res){
     .toArray(function(err, high_scores) {
       res.render('leaderboard', {
         high_scores: high_scores,
-        time_formatter: function() {
-          return function(t_raw, render){
-            var t = render(t_raw);
-            var sec_num = parseInt(t, 10) / 1000;
-            var minutes = Math.floor(sec_num / 60);
-            var seconds = Math.floor(sec_num - (minutes * 60));
-            var ms = Math.floor((sec_num - (minutes * 60) - seconds) * 100);
-
-            if (minutes < 10) { minutes = "0" + minutes; }
-            if (seconds < 10) { seconds = "0" + seconds; }
-            if (ms < 10) { ms = "0" + ms;}
-            var time = minutes + ':' + seconds + ':' + ms;
-            return time;
-          }
-        }
+        time_formatter: function(){ return time_formatter }
       });
     })
 });
 
 app.post('/leaderboard', function(req, res){
-  var collection = db.get().collection('scorecollection');
-  collection.insert([{  name: req.body.name, time: Number(req.body.time) }], function(err) {
+  const collection = db.get().collection('scorecollection');
+  collection.insert([{
+    name: req.body.name.substring(0, MAX_NAME_LENGTH),
+    time: Number(req.body.time)
+  }], function(err) {
     if (err) {
       console.error.bind(console, 'error inserting new score into DB');
     } else {
@@ -75,3 +66,17 @@ db.connect(function(err){
     });
   }
 });
+
+const time_formatter = function(t_raw, render){
+    let t = render(t_raw);
+    let sec_num = parseInt(t, 10) / 1000;
+    let minutes = Math.floor(sec_num / 60);
+    let seconds = Math.floor(sec_num - (minutes * 60));
+    let ms = Math.floor((sec_num - (minutes * 60) - seconds) * 100);
+
+    if (minutes < 10) { minutes = "0" + minutes; }
+    if (seconds < 10) { seconds = "0" + seconds; }
+    if (ms < 10) { ms = "0" + ms;}
+    let time = minutes + ':' + seconds + ':' + ms;
+    return time;
+};
